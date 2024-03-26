@@ -78,7 +78,7 @@ file_menu.add_command(label='Save as',command=save_as_file)
 file_menu.add_separator()
 file_menu.add_command(label='Exit',command=root.quit)
 
-#Edi menu oluştur
+#Edit menu oluştur
 edit_menu=Menu(my_menu,tearoff=False)
 my_menu.add_cascade(label='Edit',menu=edit_menu)
 edit_menu.add_command(label='Cut')
