@@ -22,6 +22,11 @@ def open_file():
     my_text.delete('1.0',END)
     #Dosya ismini yakala
     text_file=filedialog.askopenfilename(title='Open File',filetypes=(('Text Files','*.txt'),('All Files','*.*')))
+    #Dosya ismi var mı diye kontrol et
+    if text_file:
+     #Dosya ismini global yapıp sonradan erişim sağlama
+     global open_status_name
+     open_status_name=text_file
     #Status barı güncelle
     name=text_file
     status_bar.config(text=name)
