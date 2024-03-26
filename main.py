@@ -6,6 +6,9 @@ from tkinter import font
 root=Tk()
 root.title('WordProccessor')
 root.geometry('1200x660')
+#Açık dosya adı için değişken ayarla
+global open_status_name
+open_status_name=False
 
 
 #Yeni dosya oluşturma
@@ -51,7 +54,28 @@ def save_as_file():
         #Dosyayı Kapat
         text_file.close()
 
+#Dosya kaydetme
+def save_file():
+   global open_status_name
+   #Eğer dosya varsa
+   if open_status_name:
+     text_file=open(open_status_name,'w')
+     text_file.write(my_text.get(1.0,END))
+     #Dosyayı Kapat
+     text_file.close()
+     status_bar.config(text='Saved       ')
+    #Eğer dosyayı ilk defa kaydediyorsak
+   else:
+      save_as_file()
+    
+    
+    
+      
 
+  
+
+      
+   
 
 #MainFrame Oluşturma
 my_frame=Frame(root)
@@ -78,7 +102,7 @@ file_menu=Menu(my_menu,tearoff=False)
 my_menu.add_cascade(label='File', menu=file_menu)
 file_menu.add_command(label='New',command=new_file)
 file_menu.add_command(label='Open',command=open_file)
-file_menu.add_command(label='Save')
+file_menu.add_command(label='Save',command=save_file)
 file_menu.add_command(label='Save as',command=save_as_file)
 file_menu.add_separator()
 file_menu.add_command(label='Exit',command=root.quit)
