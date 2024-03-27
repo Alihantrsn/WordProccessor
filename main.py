@@ -18,6 +18,8 @@ def new_file():
     root.title('New File')
     #Statu barını güncelle
     status_bar.config(text='New File       ')
+    global open_status_name
+    open_status_name=False
 
 #Dosya aç
 def open_file():
