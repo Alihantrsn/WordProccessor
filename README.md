@@ -1,4 +1,4 @@
-This will be a WordProccessor implementation which allows the user to performImplement a word processor which allows the user to perform the following actions through a GUI (Graphical User Interface) that uses tkinter library:
+This will be a WordProccessor implementation which allows the user to perform Implement a word processor which allows the user to perform the following actions through a GUI (Graphical User Interface) that uses tkinter library:
 
 
 1. On a page, write multiple paragraphs.
