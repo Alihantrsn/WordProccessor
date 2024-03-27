@@ -126,13 +126,20 @@ text_scroll=Scrollbar(my_frame)
 text_scroll.pack(side=RIGHT,fill=Y)
 
 
+#Yanlamasına Scroll Bar
+hor_scroll=Scrollbar(my_frame,orient='horizontal')
+hor_scroll.pack(side=BOTTOM,fill=X)
+
+
 #Text box oluşturma
-my_text=Text(my_frame, width=97,height=25, font=('Helvetica',16),selectbackground='yellow',selectforeground='black',undo=True,yscrollcommand=text_scroll.set)
+my_text=Text(my_frame, width=97,height=25, font=('Helvetica',16),selectbackground='yellow',selectforeground='black',undo=True,yscrollcommand=text_scroll.set,wrap="none",xscrollcommand=hor_scroll.set)
 my_text.pack()
 
 
 #Scroll barı configure et
 text_scroll.config(command=my_text.yview)
+#Yan Scrollbarı configure et
+hor_scroll.config(command=my_text.xview)
 
 
 #Menu oluştur
@@ -154,16 +161,17 @@ file_menu.add_command(label='Exit',command=root.quit)
 #Edit menu oluştur
 edit_menu=Menu(my_menu,tearoff=False)
 my_menu.add_cascade(label='Edit',menu=edit_menu)
-edit_menu.add_command(label='Cut     Ctr+X', command=lambda: cut_text(False))
-edit_menu.add_command(label='Copy  Ctrl+C', command=lambda: copy_text(False))
-edit_menu.add_command(label='Paste  Ctrl+V', command=lambda: paste_text(False))
-edit_menu.add_command(label='Undo')
-edit_menu.add_command(label='Redo')
+edit_menu.add_command(label='Cut', command=lambda: cut_text(False),accelerator='Ctrl+X')
+edit_menu.add_command(label='Copy', command=lambda: copy_text(False),accelerator='Ctrl+C')
+edit_menu.add_command(label='Paste', command=lambda: paste_text(False),accelerator='Ctrl+V')
+edit_menu.add_separator()
+edit_menu.add_command(label='Undo',command=my_text.edit_undo,accelerator='Ctrl+Z')
+edit_menu.add_command(label='Redo',command=my_text.edit_redo,accelerator='Ctrl+Y')
 
 
 #Sağ alta Statu Bar ekle
 status_bar=Label(root, text='Ready       ',anchor=E)
-status_bar.pack(fill=X,side=BOTTOM,ipady=5)
+status_bar.pack(fill=X,side=BOTTOM,ipady=15)
 
 
 #Kısayol Tuşlarını Düzenleme
