@@ -5,7 +5,7 @@ from tkinter import font
 
 root=Tk()
 root.title('WordProccessor')
-root.geometry('1200x660')
+root.geometry('1200x680')
 #Açık dosya adı için değişken ayarla
 global open_status_name
 open_status_name=False
@@ -114,8 +114,58 @@ def paste_text(e):
       if selected:
          position=my_text.index(INSERT)
          my_text.insert(position, selected)
+
+
+#Yazı Kalınlaştırma
+def bold_it():
+   #Fontu oluştur
+   bold_font=font.Font(my_text,my_text.cget('font'))
+   bold_font.configure(weight='bold')
+   #Tagi configure et 
+   my_text.tag_configure('bold',font=bold_font)
+   current_tags=my_text.tag_names('sel.first')
+   #Tagin seçildiğini kontrol
+   if 'bold' in current_tags:
+      my_text.tag_remove('bold','sel.first','sel.last')
+   else:
+      my_text.tag_add('bold','sel.first','sel.last')
       
+
+
+#Yazıyı İtalic Hale Getirme
+def italics_it():
+    #Fontu oluştur
+   italic_font=font.Font(my_text,my_text.cget('font'))
+   italic_font.configure(slant='italic')
+   #Tagi configure et 
+   my_text.tag_configure('italic',font=italic_font)
+   current_tags=my_text.tag_names('sel.first')
+   #Tagin seçildiğini kontrol
+   if 'italic' in current_tags:
+      my_text.tag_remove('italic','sel.first','sel.last')
+   else:
+      my_text.tag_add('italic','sel.first','sel.last')
+
+#Yazının altını çizme
+def underlines_it():
+   #Fontu oluştur
+   underline_font=font.Font(my_text,my_text.cget('font'))
+   underline_font.configure(underline=True)
+   #Tagi configure et 
+   my_text.tag_configure('underline',font=underline_font)
+   current_tags=my_text.tag_names('sel.first')
+   #Tagin seçildiğini kontrol
+   if 'underline' in current_tags:
+      my_text.tag_remove('underline','sel.first','sel.last')
+   else:
+      my_text.tag_add('underline','sel.first','sel.last')
+
+
+#Toolbar Oluşturma
+toolbar_frame=Frame(root)
+toolbar_frame.pack(fill=X)
    
+
 #MainFrame Oluşturma
 my_frame=Frame(root)
 my_frame.pack(pady=5)
@@ -178,6 +228,15 @@ status_bar.pack(fill=X,side=BOTTOM,ipady=15)
 root.bind('<Control-Key-x>', cut_text)
 root.bind('<Control-Key-c>', copy_text)
 root.bind('<Control-Key-v>', paste_text)
+
+
+#Butonlar
+bold_button=Button(toolbar_frame,text='Bold',command=bold_it)
+bold_button.grid(row=0,column=0,sticky=W,padx=5)
+italic_button=Button(toolbar_frame,text='Italic',command=italics_it)
+italic_button.grid(row=0,column=1,padx=5)
+underline_button=Button(toolbar_frame,text='Underline',command=underlines_it)
+underline_button.grid(row=0,column=2,padx=5)
 
 
 root.mainloop()
