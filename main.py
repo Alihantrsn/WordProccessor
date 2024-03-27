@@ -67,16 +67,8 @@ def save_file():
     #Eğer dosyayı ilk defa kaydediyorsak
    else:
       save_as_file()
-    
-    
-    
-      
-
-  
-
-      
+        
    
-
 #MainFrame Oluşturma
 my_frame=Frame(root)
 my_frame.pack(pady=5)
