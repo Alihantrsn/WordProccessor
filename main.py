@@ -311,4 +311,7 @@ pageup_button=Button(bottom_toolbar,text='>',command=page_up)
 pageup_button.grid(row=0,column=4,padx=5)
 
 
+
+
+
 root.mainloop()
