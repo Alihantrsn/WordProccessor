@@ -1,11 +1,11 @@
 from tkinter import *
 from tkinter import filedialog
 from tkinter import font
-
+from tkinter import ttk
 
 root=Tk()
 root.title('WordProccessor')
-root.geometry('1200x680')
+root.geometry('1440x810')
 #Açık dosya adı için değişken ayarla
 global open_status_name
 open_status_name=False
@@ -49,7 +49,7 @@ def open_file():
 
 #Farklı Kaydet 
 def save_as_file():
-    text_file=filedialog.asksaveasfilename(defaultextension='.*',title='Save File',filetypes=(('Text Files','*.txt'),('All Files','*.*')))
+    text_file=filedialog.asksaveasfilename(defaultextension='.*',title='Save File',filetypes=(('Text Files','.txt'),('All Files','.*'),('Pdf Files','.pdf'),('Word','.doc')))
     if text_file:
         #Status barı güncelleme
         name=text_file
@@ -160,6 +160,24 @@ def underlines_it():
    else:
       my_text.tag_add('underline','sel.first','sel.last')
 
+#Yazı büyüklüğü değiştirme 
+def on_font_size_select(event):
+    selected_value = font_size_bar.get()
+    my_text.configure(font=("Helvetica", int(selected_value)))
+
+#Arama yapma
+def search_text(event):
+   search_bar.focus_set()
+#Eksik yerler var tamamlanması lazım sadece focus atıyor.
+
+#Önceki sayfaya gitme TO-DO
+def page_down(event):
+   print('beni tamamla')
+
+#Sonraki sayfaya gitme TO-DO
+def page_up(event):
+   print('beni tamamla')
+
 
 #Toolbar Oluşturma
 toolbar_frame=Frame(root)
@@ -173,7 +191,7 @@ my_frame.pack(pady=5)
 
 #Text box için scroll bar 
 text_scroll=Scrollbar(my_frame)
-text_scroll.pack(side=RIGHT,fill=Y)
+text_scroll.pack(side=LEFT,fill=Y)
 
 
 #Yanlamasına Scroll Bar
@@ -181,9 +199,17 @@ hor_scroll=Scrollbar(my_frame,orient='horizontal')
 hor_scroll.pack(side=BOTTOM,fill=X)
 
 
+header_label =Label(my_frame, text="This is a header", font=('Helvetica', 14, 'bold'))
+header_label.pack()
+
+
 #Text box oluşturma
 my_text=Text(my_frame, width=97,height=25, font=('Helvetica',16),selectbackground='yellow',selectforeground='black',undo=True,yscrollcommand=text_scroll.set,wrap="none",xscrollcommand=hor_scroll.set)
 my_text.pack()
+
+
+bottom_toolbar= Frame(root)
+bottom_toolbar.pack(pady=10,side='bottom')
 
 
 #Scroll barı configure et
@@ -228,15 +254,61 @@ status_bar.pack(fill=X,side=BOTTOM,ipady=15)
 root.bind('<Control-Key-x>', cut_text)
 root.bind('<Control-Key-c>', copy_text)
 root.bind('<Control-Key-v>', paste_text)
+root.bind('<Control-Key-f>', search_text)
 
+
+##--------------------------------------------TOOLBAR WIDGETLARI------------------------------------------------##
+#Button Yazıtipleri
+bold_font = ('Times New Roman', 14, 'bold')
+italic_font =('Times New Roman', 14, 'italic')
+underline_font = ('Times New Roman', 14, 'underline')
 
 #Butonlar
-bold_button=Button(toolbar_frame,text='Bold',command=bold_it)
+bold_button=Button(toolbar_frame,text='B',font=bold_font,command=bold_it)
 bold_button.grid(row=0,column=0,sticky=W,padx=5)
-italic_button=Button(toolbar_frame,text='Italic',command=italics_it)
+
+italic_button=Button(toolbar_frame,text='I',font=italic_font,command=italics_it)
 italic_button.grid(row=0,column=1,padx=5)
-underline_button=Button(toolbar_frame,text='Underline',command=underlines_it)
+
+underline_button=Button(toolbar_frame,text='U',font=underline_font,command=underlines_it)
 underline_button.grid(row=0,column=2,padx=5)
+
+
+#Labellar
+font_size_label=Label(toolbar_frame,text='Font Size',font=('Helvetica', 14))
+font_size_label.grid(row=0,column=3,padx=5)
+
+search_bar_label=Label(toolbar_frame,text='Search',font=('Helvetica', 14))
+search_bar_label.grid(row=0,column=5,padx=5,sticky='e')
+
+
+#Combobox
+font_size_bar = ttk.Combobox(toolbar_frame,values=[8,9,10,11,12,14,16,18,20,22,24,26,28,36,48,72])
+font_size_bar.grid(row=0,column=4,padx=5)
+font_size_bar.bind("<<ComboboxSelected>>", on_font_size_select)
+#Barlar
+search_bar = Entry(toolbar_frame)
+search_bar.grid(row=0,column=6,sticky='e')
+
+
+##--------------------------------------------ALT TOOLBAR WIDGETLARI-------------------------------------------##
+#Labellar
+word_count=Label(bottom_toolbar,text='Word Count:',font=('Helvetica', 14))
+word_count.grid(row=0,column=0)
+
+word_count=Label(bottom_toolbar,text='/!!PageCount!!',font=('Helvetica', 14))
+word_count.grid(row=0,column=3,sticky='w')
+
+#Entryler
+page_number=Entry(bottom_toolbar,text='',font=('Helvetica', 14),width=3)
+page_number.grid(row=0,column=2)
+
+#Butonlar
+pagedown_button=Button(bottom_toolbar,text='<',command=page_down)
+pagedown_button.grid(row=0,column=1,padx=5)
+
+pageup_button=Button(bottom_toolbar,text='>',command=page_up)
+pageup_button.grid(row=0,column=4,padx=5)
 
 
 root.mainloop()
