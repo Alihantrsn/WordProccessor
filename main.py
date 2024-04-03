@@ -263,6 +263,7 @@ bold_font = ('Times New Roman', 14, 'bold')
 italic_font =('Times New Roman', 14, 'italic')
 underline_font = ('Times New Roman', 14, 'underline')
 
+
 #Butonlar
 bold_button=Button(toolbar_frame,text='B',font=bold_font,command=bold_it)
 bold_button.grid(row=0,column=0,sticky=W,padx=5)
@@ -309,9 +310,6 @@ pagedown_button.grid(row=0,column=1,padx=5)
 
 pageup_button=Button(bottom_toolbar,text='>',command=page_up)
 pageup_button.grid(row=0,column=4,padx=5)
-
-
-
 
 
 root.mainloop()
